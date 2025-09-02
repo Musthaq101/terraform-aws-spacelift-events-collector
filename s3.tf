@@ -13,6 +13,9 @@ resource "aws_s3_bucket_lifecycle_configuration" "cleanup" {
     id     = "abort-incomplete-multipart-upload"
     status = "Enabled"
 
+    # required by newer AWS provider
+    filter { prefix = "" }
+
     abort_incomplete_multipart_upload {
       days_after_initiation = 1
     }
@@ -21,6 +24,9 @@ resource "aws_s3_bucket_lifecycle_configuration" "cleanup" {
   rule {
     id     = "delete-old-events"
     status = "Enabled"
+
+    # required by newer AWS provider
+    filter { prefix = "" }
 
     expiration {
       days = var.events_expiration_days
