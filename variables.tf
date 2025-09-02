@@ -46,3 +46,9 @@ variable "secret" {
   sensitive   = true
   type        = string
 }
+
+variable "courier_description" {
+  type        = string
+  default     = "Spacelift audit events courier (Lambda URL → Firehose → S3)"
+  description = "Description for the courier Lambda."
+}
