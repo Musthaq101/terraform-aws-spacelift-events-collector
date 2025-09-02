@@ -26,6 +26,7 @@ resource "aws_lambda_function" "courier" {
   handler          = "function.handler"
   role             = aws_iam_role.courier.arn
   runtime          = "python${var.python_version}"
+  description      = var.courier_description
   source_code_hash = data.archive_file.lambda_function.output_base64sha256
 
   environment {
@@ -47,17 +48,6 @@ resource "aws_lambda_function_url" "courier" {
 
   authorization_type = "NONE"
   function_name      = aws_lambda_function.courier.function_name
-}
-
-resource "aws_lambda_function" "courier" {
-  filename         = data.archive_file.lambda_function.output_path
-  function_name    = local.courier_name
-  handler          = "function.handler"
-  role             = aws_iam_role.courier.arn
-  runtime          = "python${var.python_version}"
-  description      = var.courier_description
-  source_code_hash = data.archive_file.lambda_function.output_base64sha256
-  
 }
 
 resource "aws_iam_role" "courier" {
